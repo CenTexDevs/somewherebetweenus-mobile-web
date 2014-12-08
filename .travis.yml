@@ -6,3 +6,7 @@ before_script:
   - 'gem install compass'
   - 'npm install -g bower grunt-cli'
   - 'bower install'
+after_success:
+ - 'curl -l http://somewherebetween.us:8080/update_mobile_web.php'
+
+
