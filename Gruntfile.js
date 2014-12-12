@@ -363,6 +363,25 @@ module.exports = function (grunt) {
       }
     },
 
+    // Automates version control tasks for project's built code.
+    // Keeps built code in sync with source code, commit with automatic messages,
+    // and push to remote repositories.
+    buildcontrol: {
+      options: {
+        dir: 'dist',
+        commit: true,
+        push: true,
+        connectCommits: false,
+        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+      },
+      heroku: {
+        options: {
+          remote: 'git@heroku.com:yeoman-cd.git',
+          branch: 'master'
+        }
+      }
+    },
+
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
