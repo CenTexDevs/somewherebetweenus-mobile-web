@@ -376,7 +376,7 @@ module.exports = function (grunt) {
       },
       heroku: {
         options: {
-          remote: 'git@heroku.com:somewherebetweenus-mobile-web',
+          remote: 'git@heroku.com:somewherebetweenus-mobile-web.git',
           branch: 'master'
         }
       }
