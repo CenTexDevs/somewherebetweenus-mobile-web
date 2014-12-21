@@ -1,7 +1,6 @@
 ## Customize dependencies
 dependencies:
   pre:
-    - gem uninstall bundler # use a custom version of bundler
     - gem install bundler --pre
     - gem update --system
     - gem install compass
