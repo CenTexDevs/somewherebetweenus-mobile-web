@@ -1,15 +1,14 @@
 box: wercker/nodejs
 # Build definition
 build:
+ - script:                                   # [2]
+        name: install grunt-cli
+        code: sudo npm install -g grunt-cli
+
   # The steps that will be executed on build
   steps:
     # A step that executes `npm install` command
     - npm-install
-    - 'npm install -g bower grunt-cli'
-    - 'gem install compass'
-    - 'gem update --system'
-    - 'gem install compass'
-    - 'bower install'
 
 
     # A step that executes `npm test` command
