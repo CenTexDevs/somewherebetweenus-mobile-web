@@ -5,7 +5,8 @@ build:
   steps:
     # A step that executes `npm install` command
     - npm-install
-
+    - 'npm install -g bower grunt-cli'
+    - 'gem install compass'
     - 'gem update --system'
     - 'gem install compass'
     - 'bower install'
