@@ -5,6 +5,12 @@ build:
   steps:
     # A step that executes `npm install` command
     - npm-install
+
+    - 'gem update --system'
+    - 'gem install compass'
+    - 'bower install'
+
+
     # A step that executes `npm test` command
     - npm-test
 
