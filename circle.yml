@@ -7,3 +7,8 @@ dependencies:
     - npm install -g bower grunt-cli
     - bower install
 
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: somewherebetweenus-mobile-web
