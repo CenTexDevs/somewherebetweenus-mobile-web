@@ -204,10 +204,16 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 	};
 
 	$scope.verifyCorsEnabled = function(){
-		$http.get('http://somewherebetweenus-server.herokuapp.com/User/useHelloWorldService'
-		).success(function(data) {
+		$http({
+			method:'POST',
+			url:'http://somewherebetweenus-server.herokuapp.com/User/useHelloWorldService',
+			data:{"foo":"bar"},
+			headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+        	}
+		}).success(function(data) {
 			alert(data);
-		  // data contains the response
+		  // data contains the response{}
 		  // status is the HTTP status
 		  // headers is the header getter function
 		  // config is the object that was used to create the HTTP request
