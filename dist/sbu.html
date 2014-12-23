@@ -1,4 +1,11 @@
-<html ng-app="myApp"> <head> <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script> <style>html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+<html ng-app="myApp">
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+<style>
+
+html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 
 .top_menu{
 	position:absolute;
@@ -88,7 +95,48 @@
 .bottom_menu_expanded{
 	height:auto !important;
 	top:50px !important;
-}</style>  <body> <div class="top_menu"> <div class="logo"></div> <div class="menu_icon"></div> <div class="invite_form" ng-controller="MyController"> <div>Invite Others:</div> <div><input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"></div> <div> <input class="send_invitation_button" type="submit" value="Send Invitation" ng-click="sendInvitation()"> </div> </div> <div class="leave_group"> <div><input class="leave_group_button" type="submit" value="Leave Group"></div> </div> </div> <div class="main"> <div id="map-canvas"></div> </div> <div class="bottom_menu"> </div>  <footer> <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M"></script> <script type="text/javascript">function centerMap(position) 
+}
+
+</style>
+
+
+</head>
+<body>
+
+<div class="top_menu">
+	<div class="logo"></div>
+	<div class="menu_icon"></div>
+	<div class="invite_form" ng-controller="MyController">
+		<div>Invite Others:</div>
+		<div><input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"/></div>
+		<div>
+			<input class="send_invitation_button" type="submit" value="Check CORS" ng-click="verifyCorsEnabled()"/>
+			<input class="send_invitation_button" type="submit" value="Send Invitation" ng-click="sendInvitation()"/>
+		</div>
+	</div>
+	<div class="leave_group">
+		<div><input class="leave_group_button" type="submit" value="Leave Group"/></div>
+	</div>
+
+</div>
+
+<div class="main">
+<div id="map-canvas"></div>
+</div>
+
+<div class="bottom_menu">
+</div>
+
+
+</body>
+<footer>
+
+
+<script type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M">
+</script>
+<script type="text/javascript">
+	function centerMap(position) 
 	{	
 		var mapOptions = {
           center: { lat: position.coords.latitude, lng: position.coords.longitude},
@@ -112,13 +160,26 @@
 
     }
 
-	google.maps.event.addDomListener(window, 'load', initialize);</script> <script>$(".menu_icon").on("click",function(){
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+<script>
+
+
+	$(".menu_icon").on("click",function(){
 		$(".top_menu").toggleClass("top_menu_expanded");
 	});
 
 	$(".bottom_menu").on("click",function(){
 		$(".bottom_menu").toggleClass("bottom_menu_expanded");
-	});</script> <script>var app = angular.module('myApp', []);
+	});
+
+	
+</script>
+
+<script>
+<!-- angular stuff -->
+var app = angular.module('myApp', []);
 
 app.run(function($rootScope){
 //	$rootScope.name = "Rob";
@@ -141,7 +202,26 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 			alert('bad');
 		});
 	};
+
+	$scope.verifyCorsEnabled = function(){
+		$http.get('http://somewherebetweenus-server.herokuapp.com/User/useHelloWorldService'
+		).success(function(data) {
+			alert(data);
+		  // data contains the response
+		  // status is the HTTP status
+		  // headers is the header getter function
+		  // config is the object that was used to create the HTTP request
+		}).error(function(data, status) {
+			alert(status);
+		});
+	};
 	$scope.person={
 		name:'Robby'
 	};
-}]);</script> </footer> 
+}]);
+
+
+</script>
+
+</footer>
+</html>

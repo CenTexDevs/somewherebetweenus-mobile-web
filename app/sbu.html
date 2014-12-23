@@ -110,6 +110,7 @@ html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 		<div>Invite Others:</div>
 		<div><input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"/></div>
 		<div>
+			<input class="send_invitation_button" type="submit" value="Check CORS" ng-click="verifyCorsEnabled()"/>
 			<input class="send_invitation_button" type="submit" value="Send Invitation" ng-click="sendInvitation()"/>
 		</div>
 	</div>
@@ -193,6 +194,22 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
   		  url: 'https://api.github.com/events?callback=JSON_CALLBACK'
 		}).success(function(data, status, headers, config) {
 			alert('good');
+		  // data contains the response
+		  // status is the HTTP status
+		  // headers is the header getter function
+		  // config is the object that was used to create the HTTP request
+		}).error(function(data, status, headers, config) {
+			alert('bad');
+		});
+	};
+
+	$scope.verifyCorsEnabled = function(){
+		$http({
+		  //data:{name:name},
+		  method: 'POST',
+  		  url: 'http://somewherebetweenus-server.herokuapp.com/User/useHelloWorldService'
+		}).success(function(data, status, headers, config) {
+			alert(data);
 		  // data contains the response
 		  // status is the HTTP status
 		  // headers is the header getter function
