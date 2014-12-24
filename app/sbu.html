@@ -212,7 +212,7 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
                     'Content-Type': 'application/json; charset=utf-8'
         	}
 		}).success(function(data) {
-			alert(data);
+			alert(data.name);
 		  // data contains the response{}
 		  // status is the HTTP status
 		  // headers is the header getter function
