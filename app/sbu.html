@@ -135,6 +135,7 @@ html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 <script type="text/javascript"
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M">
 </script>
+<script src="bower_components/jquery.cookie/jquery.cookie.js">
 <script type="text/javascript">
 	function centerMap(position) 
 	{	
@@ -227,6 +228,11 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 }]);
 
 
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$.cookie("test", 1, { expires : 10 });
+});
 </script>
 
 </footer>
