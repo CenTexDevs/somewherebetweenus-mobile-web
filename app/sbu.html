@@ -143,7 +143,8 @@ html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 	{	
 		var mapOptions = {
           center: { lat: position.coords.latitude, lng: position.coords.longitude},
-          zoom: 8
+          zoom: 9,
+          disableDefaultUI: true
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
