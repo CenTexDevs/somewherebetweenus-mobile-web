@@ -166,5 +166,41 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 		name:'Robby'
 	};
 }]);</script> <script type="text/javascript">$(document).ready(function(){
-	$.cookie("test", 1, { expires : 10 });
+
+	var GetQueryStringParams = function(sParam){
+	    var sPageURL = window.location.search.substring(1);
+	    var sURLVariables = sPageURL.split('&');
+	    for (var i = 0; i < sURLVariables.length; i++) 
+	    {
+	        var sParameterName = sURLVariables[i].split('=');
+	        if (sParameterName[0] == sParam) 
+	        {
+	            return sParameterName[1];
+	        }
+	    }
+	}
+
+	var group_id = $.cookie("group_id");
+	if(group_id != null) //it's already set...bail out
+		return; 
+
+
+	//was the group_id set in the query parameter?
+	var group_id = GetQueryStringParams('group_id');
+	if(group_id != null)
+	{
+		$.cookie("group_id", group_id, { expires : 10 });
+		return;
+	}
+
+	//ok...so it's not set in a cookie and wasn't passed in...so create it
+
+	alert('no group_id...setting it now...');
+	var group_id = Math.random().toString(36);
+	$.cookie("group_id", group_id, { expires : 10 });
+	group_id = $.cookie("group_id");
+	alert('group_id is ' + group_id);
+
+	
+
 });</script> </footer> 
