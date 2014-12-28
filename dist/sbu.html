@@ -195,11 +195,11 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 
 	//ok...so it's not set in a cookie and wasn't passed in...so create it
 
-	alert('no group_id...setting it now...');
+	console.log('no group_id...setting it now...');
 	var group_id = Math.random().toString(36);
 	$.cookie("group_id", group_id, { expires : 10 });
 	group_id = $.cookie("group_id");
-	alert('group_id is ' + group_id);
+	console.log('group_id is ' + group_id);
 
 	
 
