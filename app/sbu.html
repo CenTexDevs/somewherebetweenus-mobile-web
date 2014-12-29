@@ -139,6 +139,8 @@ html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 </script>
 <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
 <script type="text/javascript">
+	var map = null;
+
 	function centerMap(position) 
 	{	
 		var mapOptions = {
@@ -146,9 +148,17 @@ html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
           zoom: 9,
           disableDefaultUI: true
         };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
+        map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
 
+
+	  var myLatlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+
+	  var marker = new google.maps.Marker({
+	      position: myLatlng,
+	      map: map,
+	      title: 'Hello World!'
+	  });
 	}
 	
 	function nolocation(){
@@ -275,6 +285,13 @@ $(document).ready(function(){
 	console.log('group_id is ' + group_id);
 
 	
+
+});
+</script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
 
 });
 </script>

@@ -89,16 +89,26 @@
 
 .footer_expanded{
 	height:90vh !important;
-}</style> <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">  <body> <div class="header"> <div class="logo"></div> <div class="menu_icon"></div> <div class="invite_form" ng-controller="MyController"> <div>Invite Others:</div> <div><input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"></div> <div> <input class="send_invitation_button" type="submit" value="Check CORS" ng-click="verifyCorsEnabled()"> <input class="send_invitation_button" type="submit" value="Send Invitation" ng-click="sendInvitation()"> </div> </div> <div class="leave_group"> <div><input class="leave_group_button" type="submit" value="Leave Group"></div> </div> </div> <div class="main"> <div id="map-canvas"></div> </div> <div class="footer"> </div>  <footer> <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M"></script> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">function centerMap(position) 
+}</style> <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">  <body> <div class="header"> <div class="logo"></div> <div class="menu_icon"></div> <div class="invite_form" ng-controller="MyController"> <div>Invite Others:</div> <div><input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"></div> <div> <input class="send_invitation_button" type="submit" value="Check CORS" ng-click="verifyCorsEnabled()"> <input class="send_invitation_button" type="submit" value="Send Invitation" ng-click="sendInvitation()"> </div> </div> <div class="leave_group"> <div><input class="leave_group_button" type="submit" value="Leave Group"></div> </div> </div> <div class="main"> <div id="map-canvas"></div> </div> <div class="footer"> </div>  <footer> <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M"></script> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">var map = null;
+
+	function centerMap(position) 
 	{	
 		var mapOptions = {
           center: { lat: position.coords.latitude, lng: position.coords.longitude},
           zoom: 9,
           disableDefaultUI: true
         };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
+        map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
 
+
+	  var myLatlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+
+	  var marker = new google.maps.Marker({
+	      position: myLatlng,
+	      map: map,
+	      title: 'Hello World!'
+	  });
 	}
 	
 	function nolocation(){
@@ -202,5 +212,7 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 	console.log('group_id is ' + group_id);
 
 	
+
+});</script> <script type="text/javascript">$(document).ready(function(){
 
 });</script> </footer> 
