@@ -1,0 +1,80 @@
+<html> <head> <meta name="viewport" content="width=device-width,initial-scale=1"> <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> <style>div.join{
+	background-color:grey;
+	border-style:solid;
+	border-width:3px;
+	border-color:555555;
+
+}
+
+.nickname, .prompt {
+	margin-left:20%;
+	margin-right:20%;	
+}
+
+.prompt, .nickname, .join{
+	text-align: center;
+}
+
+.join{
+	margin-left:40%;
+	margin-right:40%;
+}</style>  <body> <div class="header"> </div> <div class="main"> <div class="prompt">Please enter a nickname and click 'join'</div><br> <br> <div class="nickname"><input type="text"></div><br> <br> <div class="join">Join!</div> </div> <div class="footer"> </div>  <footer> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">$(".join").on("click",function(){
+
+		$.ajax({
+		  type: "POST",
+		  url: "joingroup",
+		  data: {"key":"value"},
+		  success: function(data){
+		  	console.log('all good');
+		  },
+		  fail:function(){
+		  	console.log('nope');
+
+		  }
+		});
+	});</script> <script type="text/javascript">$(document).ready(function(){
+
+	var GetQueryStringParams = function(sParam){
+	    var sPageURL = window.location.search.substring(1);
+	    var sURLVariables = sPageURL.split('&');
+	    for (var i = 0; i < sURLVariables.length; i++) 
+	    {
+	        var sParameterName = sURLVariables[i].split('=');
+	        if (sParameterName[0] == sParam) 
+	        {
+	            return sParameterName[1];
+	        }
+	    }
+	}
+
+
+	var user_id = $.cookie("user_id");
+	if(user_id == null) 
+	{
+		//make a user id for this session
+		var user_id = Math.random().toString(36);
+		$.cookie("user_id", user_id, { expires : 10 });
+	}
+
+
+	var group_id = $.cookie("group_id");
+	if(group_id != null) //it's already set...bail out
+		return; 
+
+
+	//was the group_id set in the query parameter?
+	var group_id = GetQueryStringParams('group_id');
+	if(group_id != null)
+	{
+		$.cookie("group_id", group_id, { expires : 10 });
+		return;
+	}
+
+	//ok...so it's not set in a cookie and wasn't passed in...so create it
+	var group_id = Math.random().toString(36);
+	$.cookie("group_id", group_id, { expires : 10 });
+	//create a user id as well
+
+	
+
+});</script> </footer> 

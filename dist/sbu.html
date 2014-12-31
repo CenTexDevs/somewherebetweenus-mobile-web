@@ -196,6 +196,16 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 	    }
 	}
 
+
+	var user_id = $.cookie("user_id");
+	if(user_id == null) 
+	{
+		//make a user id for this session
+		var user_id = Math.random().toString(36);
+		$.cookie("user_id", user_id, { expires : 10 });
+	}
+
+
 	var group_id = $.cookie("group_id");
 	if(group_id != null) //it's already set...bail out
 		return; 
@@ -210,12 +220,9 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 	}
 
 	//ok...so it's not set in a cookie and wasn't passed in...so create it
-
-	console.log('no group_id...setting it now...');
 	var group_id = Math.random().toString(36);
 	$.cookie("group_id", group_id, { expires : 10 });
-	group_id = $.cookie("group_id");
-	console.log('group_id is ' + group_id);
+	//create a user id as well
 
 	
 
