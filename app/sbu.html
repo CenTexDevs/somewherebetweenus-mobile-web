@@ -8,6 +8,34 @@
 
 html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 
+
+.hide{
+	display:none !important;
+}
+
+.nickname{
+	text-align:center;
+	color:rgba(200,200,200,1);
+	padding-top:10vh;
+	display:block;	
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	z-index:10;
+	background-color: rgba(5, 5, 5, .9);
+}
+
+.setnickname{
+	border-width:3px;
+	border-color:black;
+	border-style:solid;
+	margin-left: 40%;
+	margin-right: 40%;
+	background-color: rgba(50,50,50,1);
+}
+
 .header{
 	position:absolute;
 	height:10vh;
@@ -111,6 +139,14 @@ html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 
 </head>
 <body>
+
+<div class="nickname">
+	let's get started by creating a nickname<br><br>
+	<input type="text" placeholder="nickname" class="nicknameval"/><br><br>
+	<i>(hint: use a nickname your friends would <br>
+		recognize, such as FLastname or FirstnameL)</i><br><br>
+	<div class="setnickname">let's go somewhere!</div>
+</div>
 
 <div class="header">
 	<div class="logo"></div>
@@ -280,22 +316,22 @@ $(document).ready(function(){
 	}
 
 
-	var group_id = $.cookie("group_id");
-	if(group_id != null) //it's already set...bail out
+	var meeting_id = $.cookie("meeting_id");
+	if(meeting_id != null) //it's already set...bail out
 		return; 
 
 
-	//was the group_id set in the query parameter?
-	var group_id = GetQueryStringParams('group_id');
-	if(group_id != null)
+	//was the meeting_id set in the query parameter?
+	var meeting_id = GetQueryStringParams('meeting_id');
+	if(meeting_id != null)
 	{
-		$.cookie("group_id", group_id, { expires : 10 });
+		$.cookie("meeting_id", meeting_id, { expires : 10 });
 		return;
 	}
 
 	//ok...so it's not set in a cookie and wasn't passed in...so create it
-	var group_id = Math.random().toString(36);
-	$.cookie("group_id", group_id, { expires : 10 });
+	var meeting_id = Math.random().toString(36);
+	$.cookie("meeting_id", meeting_id, { expires : 10 });
 	//create a user id as well
 
 	
@@ -308,6 +344,32 @@ $(document).ready(function(){
 $(document).ready(function(){
 
 });
+</script>
+
+<script type="text/javascript">
+
+	$(".setnickname").on("click",function(){
+		//set nickname
+		var nickname = $(".nicknameval").val();
+		$.cookie("nickname",nickname,{expires:10});
+
+		var meeting_id = $.cookie("meeting_id");
+
+		$.ajax({
+		  type: "POST",
+		  url: "http://api.somewherebetween.us/Meeting/create",
+		  data: {"nickname":nickname,
+			"meetingid":meeting_id},
+		  success: function(data){
+		  	console.log('all good');
+		  },
+		  fail:function(){
+		  	console.log('nope');
+
+		  }
+		});
+	});
+
 </script>
 
 </footer>
