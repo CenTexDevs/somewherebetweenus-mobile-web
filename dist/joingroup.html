@@ -25,14 +25,19 @@ div.join{
 }</style>  <body> <div class="header"> </div> <div class="main"> <div class="prompt">choose a nickname and click 'join'</div><br> <br> <div class="nickname"><input class="nickname_input" type="text"></div><br> <br> <div class="join">join!</div> </div> <div class="footer"> </div>  <footer> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">$(".join").on("click",function(){
 
 		$.cookie("nickname", $(".nickname_input").val(), { expires : 10 });
-		location.href="sbu.html";
 
-		return;
+		var _data = {
+			guestid : $.cookie("guestID"),
+			nickname : $(".nickname_input").val(),
+			meetingid : $.cookie("meetingID"),
+			latitude : $.cookie("latitude"),
+			longitude : $.cookie("longitude")
+		}
 
 		$.ajax({
 		  type: "POST",
-		  url: "joingroup",
-		  data: {"key":"value"},
+		  url: "http://somewherebetweenus-server.herokuapp.com/Meeting/addguest/",
+		  data: _data,
 		  success: function(data){
 
 		  	location.href="sbu.html";
@@ -43,6 +48,30 @@ div.join{
 		  }
 		});
 	});</script> <script type="text/javascript">$(document).ready(function(){
+
+	//variables
+	$.cookie("latitude", null, { expires : 10 });
+	$.cookie("longitude", null, { expires : 10 });
+
+
+	//functions
+	var setGeoLocation = function(position){
+		$.cookie("longitude", position.coords.longitude, { expires : 10 });
+		$.cookie("latitude", position.coords.latitude, { expires : 10 });
+	}
+	
+	var nolocation = function(){
+		console.log('no location!');
+	}
+
+	var getGeoLolcation = function() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(setGeoLocation,nolocation);
+		} else {
+			console.log("Geolocation is not supported by this browser.");
+		}
+
+    }
 
 	var GetQueryStringParams = function(sParam){
 	    var sPageURL = window.location.search.substring(1);
@@ -57,34 +86,40 @@ div.join{
 	    }
 	}
 
-
-	var guestID = $.cookie("guestID");
-	if(guestID == null) 
+	var setSessionCookieValues = function()
 	{
-		//make a user id for this session
-		var guestID = Math.random().toString(36);
-		$.cookie("guestID", guestID, { expires : 10 });
-	}
+
+		var guestID = $.cookie("guestID");
+		if(guestID == null) 
+		{
+			//make a user id for this session
+			var guestID = Math.random().toString(36);
+			$.cookie("guestID", guestID, { expires : 10 });
+		}
 
 
-	var meetingID = $.cookie("meetingID");
-	if(meetingID != null) //it's already set...bail out
-		return; 
+		var meetingID = $.cookie("meetingID");
+		if(meetingID != null) //it's already set...bail out
+			return; 
 
 
-	//was the meetingID set in the query parameter?
-	var meetingID = GetQueryStringParams('meetingID');
-	if(meetingID != null)
-	{
+		//was the meetingID set in the query parameter?
+		var meetingID = GetQueryStringParams('meetingID');
+		if(meetingID != null)
+		{
+			$.cookie("meetingID", meetingID, { expires : 10 });
+			return;
+		}
+
+		//ok...so it's not set in a cookie and wasn't passed in...so create it
+		var meetingID = Math.random().toString(36);
 		$.cookie("meetingID", meetingID, { expires : 10 });
-		return;
+		//create a user id as well
 	}
 
-	//ok...so it's not set in a cookie and wasn't passed in...so create it
-	var meetingID = Math.random().toString(36);
-	$.cookie("meetingID", meetingID, { expires : 10 });
-	//create a user id as well
-
+	//call init functions
+	setSessionCookieValues();
+	getGeoLolcation();
 	
 
 });</script> </footer> 
