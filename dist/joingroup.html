@@ -22,13 +22,19 @@ div.join{
 .join{
 	margin-left:40%;
 	margin-right:40%;
-}</style>  <body> <div class="header"> </div> <div class="main"> <div class="prompt">choose a nickname and click 'join'</div><br> <br> <div class="nickname"><input type="text"></div><br> <br> <div class="join">join!</div> </div> <div class="footer"> </div>  <footer> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">$(".join").on("click",function(){
+}</style>  <body> <div class="header"> </div> <div class="main"> <div class="prompt">choose a nickname and click 'join'</div><br> <br> <div class="nickname"><input class="nickname_input" type="text"></div><br> <br> <div class="join">join!</div> </div> <div class="footer"> </div>  <footer> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">$(".join").on("click",function(){
+
+		$.cookie("nickname", $(".nickname_input").val(), { expires : 10 });
+		location.href="sbu.html";
+
+		return;
 
 		$.ajax({
 		  type: "POST",
 		  url: "joingroup",
 		  data: {"key":"value"},
 		  success: function(data){
+
 		  	location.href="sbu.html";
 		  },
 		  fail:function(){
