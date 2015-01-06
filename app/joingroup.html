@@ -6,6 +6,10 @@
 
 <style>
 
+body{
+	background-color:rgba(125,125,125,1);
+}
+
 div.join{
 	background-color:grey;
 	border-style:solid;
@@ -28,6 +32,7 @@ div.join{
 	margin-right:40%;
 }
 
+
 </style>
 
 </head>
@@ -35,11 +40,11 @@ div.join{
 <div class="header">
 </div>
 <div class="main">
-	<div class="prompt">Please enter a nickname and click 'join'</div><br>
+	<div class="prompt">choose a nickname and click 'join'</div><br>
 	<br>
 	<div class="nickname"><input type="text" ></div><br>
 	<br>
-	<div class="join" >Join!</div>
+	<div class="join" >join!</div>
 
 
 </div>
@@ -63,7 +68,7 @@ div.join{
 		  url: "joingroup",
 		  data: {"key":"value"},
 		  success: function(data){
-		  	console.log('all good');
+		  	location.href="sbu.html";
 		  },
 		  fail:function(){
 		  	console.log('nope');
@@ -93,31 +98,31 @@ $(document).ready(function(){
 	}
 
 
-	var user_id = $.cookie("user_id");
-	if(user_id == null) 
+	var guestID = $.cookie("guestID");
+	if(guestID == null) 
 	{
 		//make a user id for this session
-		var user_id = Math.random().toString(36);
-		$.cookie("user_id", user_id, { expires : 10 });
+		var guestID = Math.random().toString(36);
+		$.cookie("guestID", guestID, { expires : 10 });
 	}
 
 
-	var group_id = $.cookie("group_id");
-	if(group_id != null) //it's already set...bail out
+	var meetingID = $.cookie("meetingID");
+	if(meetingID != null) //it's already set...bail out
 		return; 
 
 
-	//was the group_id set in the query parameter?
-	var group_id = GetQueryStringParams('group_id');
-	if(group_id != null)
+	//was the meetingID set in the query parameter?
+	var meetingID = GetQueryStringParams('meetingID');
+	if(meetingID != null)
 	{
-		$.cookie("group_id", group_id, { expires : 10 });
+		$.cookie("meetingID", meetingID, { expires : 10 });
 		return;
 	}
 
 	//ok...so it's not set in a cookie and wasn't passed in...so create it
-	var group_id = Math.random().toString(36);
-	$.cookie("group_id", group_id, { expires : 10 });
+	var meetingID = Math.random().toString(36);
+	$.cookie("meetingID", meetingID, { expires : 10 });
 	//create a user id as well
 
 	
