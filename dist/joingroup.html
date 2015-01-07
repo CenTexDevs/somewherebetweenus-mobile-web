@@ -89,21 +89,11 @@ div.join{
 	var setSessionCookieValues = function()
 	{
 
-		var guestID = $.cookie("guestID");
-		if(guestID == null) 
-		{
-			//make a user id for this session
-			var guestID = Math.random().toString(36);
-			$.cookie("guestID", guestID, { expires : 10 });
-		}
+		//force the guestID to be set to avoid mixing across meetings
+		var guestID = Math.random().toString(36);
+		$.cookie("guestID", guestID, { expires : 10 });
 
-
-		var meetingID = $.cookie("meetingID");
-		if(meetingID != null) //it's already set...bail out
-			return; 
-
-
-		//was the meetingID set in the query parameter?
+		//we can assume that the meetingID is a query string parameter
 		var meetingID = GetQueryStringParams('meetingID');
 		if(meetingID != null)
 		{
@@ -111,10 +101,9 @@ div.join{
 			return;
 		}
 
-		//ok...so it's not set in a cookie and wasn't passed in...so create it
+		//fail-back (the user will essentially be creating their own meeting)
 		var meetingID = Math.random().toString(36);
 		$.cookie("meetingID", meetingID, { expires : 10 });
-		//create a user id as well
 	}
 
 	//call init functions

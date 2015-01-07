@@ -156,14 +156,6 @@
         map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
 
-
-	  var myLatlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-
-	  var marker = new google.maps.Marker({
-	      position: myLatlng,
-	      map: map,
-	      title: 'Hello World!'
-	  });
 	}
 	
 	function nolocation(){
@@ -336,4 +328,74 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 
 		location.reload();
 
-	});</script> </footer> 
+	});</script> <script type="text/javascript">var mapmarkers = [];
+
+	var updateMapMarkers = function(){
+
+		if(map == null)
+			return;
+
+		var meetingID = $.cookie("meetingID");
+
+		$.ajax({
+		  type: "POST",
+		  url: "http://somewherebetweenus-server.herokuapp.com/Meeting/getmeetingmarkers",
+		  data: {"meetingid":meetingID},
+		  success: function(data){
+		  	data = JSON.parse(data);
+		  	displayMapMarkers(data)
+		  	console.log('all good');
+		  },
+		  fail:function(){
+		  	console.log('nope');
+		  }
+		});
+	};
+
+	var displayMapMarkers = function(markers){
+
+		clearMapMarkers();
+
+	    for (var i = 0; i < markers.length; i++) 
+	    {
+	    	if(markers[i].type == 'guest')
+	    	{
+
+			  	var myLatlng = new google.maps.LatLng(markers[i].latitude,markers[i].longitude);
+
+			  	var marker = new google.maps.Marker({
+			      	position: myLatlng,
+			      	map: map,
+			    	title: 'Hello World!'
+			  	});
+
+			  	if(markers[i].nickname == $.cookie("nickname"))
+				  	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+				else
+				 	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+
+
+			  mapmarkers[mapmarkers.length] = marker;
+	    	}
+	    	if(markers[i].type == 'venue')
+	    	{
+
+	    	}
+	    }
+
+
+		for (var i = 0; i < mapmarkers.length; i++) 
+			mapmarkers[i].setMap(map);
+	}
+
+	var clearMapMarkers = function()
+	{
+		for (var i = 0; i < mapmarkers.length; i++) 
+			mapmarkers[i].setMap(null);
+
+		mapmarkers = [];
+
+	}
+
+	//start update loop
+	setInterval(function(){updateMapMarkers();},10000);</script> </footer> 
