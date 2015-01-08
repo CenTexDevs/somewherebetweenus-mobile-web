@@ -8,6 +8,8 @@
 
 html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 
+body {overflow:hidden;}
+
 
 .hide{
 	display:none !important;
@@ -142,16 +144,16 @@ html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 
 .footer{
 	position:absolute;
-	bottom:0px;
+	top:90vh;
 	left:0px;
 	right:0px;
-	height:10vh;
+	height:90vh;
 	background-color:green;
 	z-index:1;
 }
 
 .footer_expanded{
-	height:90vh !important;
+	top:10vh !important;
 }
 
 </style>
@@ -168,6 +170,7 @@ html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 		recognize, such as FLastname or FirstnameL)</i><br><br>
 	<div class="setnickname">let's go somewhere!</div>
 </div>
+
 
 <div class="header">
 	<div class="logo"></div>
@@ -186,7 +189,58 @@ html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 <div id="map-canvas"></div>
 </div>
 
+<style>
+
+
+.venue{
+	width:100%;
+}
+
+.search_form{
+	text-align:center;
+	width:100vw;
+}
+
+.search_headline{
+	position:absolute;
+	top:3vh;
+	width:100vw;
+}
+
+.venue_type_div{
+	position:absolute;
+	top:10vh;
+	left:30vw;
+	right:30vw;
+}
+
+.search_button{
+	position:absolute;
+	top:20vh;
+	left:30vw;
+	right:30vw; 
+	background-color:grey;
+	border-style:solid;
+	border-width:3px;
+	border-color:555555;
+}
+
+.venue_type_div{
+	position:absolute;
+	top:12vh;
+	left:30vw;
+	right:30vw; 
+}
+
+</style>
+
 <div class="footer">
+	<div class="search_form">
+		<div class="search_headline" style="text-align:center">what are you looking for?</div>
+		<div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"/></div>
+		<div class="search_button">search!</div>
+		</div>
+	</div>
 </div>
 
 
@@ -236,7 +290,7 @@ html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 		$(".header").toggleClass("header_expanded");
 	});
 
-	$(".footer").on("click",function(){
+	$(".search_headline").on("click",function(){
 		$(".footer").toggleClass("footer_expanded");
 	});
 

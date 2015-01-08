@@ -1,5 +1,7 @@
 <html ng-app="myApp"> <head> <meta name="viewport" content="width=device-width,initial-scale=1">. <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script> <style>html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 
+body {overflow:hidden;}
+
 
 .hide{
 	display:none !important;
@@ -134,17 +136,55 @@
 
 .footer{
 	position:absolute;
-	bottom:0px;
+	top:90vh;
 	left:0px;
 	right:0px;
-	height:10vh;
+	height:90vh;
 	background-color:green;
 	z-index:1;
 }
 
 .footer_expanded{
-	height:90vh !important;
-}</style> <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">  <body> <div class="nickname hide"> let's get started by creating a nickname<br><br> <input type="text" placeholder="nickname" class="nicknameval"><br><br> <i>(hint: use a nickname your friends would <br> recognize, such as FLastname or FirstnameL)</i><br><br> <div class="setnickname">let's go somewhere!</div> </div> <div class="header"> <div class="logo"></div> <div class="menu_icon"></div> <div class="invite_form" ng-controller="MyController"> <div style="text-align:center">invite others!</div> <div class="friend_address_div"><input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"></div> <div class="send_invitation_button">send invitation </div> <div class="leave_group leave_group_button">leave group</div> </div> </div>  <div class="main"> <div id="map-canvas"></div> </div> <div class="footer"> </div>  <footer> <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M"></script> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">var map = null;
+	top:10vh !important;
+}</style> <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">  <body> <div class="nickname hide"> let's get started by creating a nickname<br><br> <input type="text" placeholder="nickname" class="nicknameval"><br><br> <i>(hint: use a nickname your friends would <br> recognize, such as FLastname or FirstnameL)</i><br><br> <div class="setnickname">let's go somewhere!</div> </div> <div class="header"> <div class="logo"></div> <div class="menu_icon"></div> <div class="invite_form" ng-controller="MyController"> <div style="text-align:center">invite others!</div> <div class="friend_address_div"><input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"></div> <div class="send_invitation_button">send invitation </div> <div class="leave_group leave_group_button">leave group</div> </div> </div>  <div class="main"> <div id="map-canvas"></div> </div> <style>.venue{
+	width:100%;
+}
+
+.search_form{
+	text-align:center;
+	width:100vw;
+}
+
+.search_headline{
+	position:absolute;
+	top:3vh;
+	width:100vw;
+}
+
+.venue_type_div{
+	position:absolute;
+	top:10vh;
+	left:30vw;
+	right:30vw;
+}
+
+.search_button{
+	position:absolute;
+	top:20vh;
+	left:30vw;
+	right:30vw; 
+	background-color:grey;
+	border-style:solid;
+	border-width:3px;
+	border-color:555555;
+}
+
+.venue_type_div{
+	position:absolute;
+	top:12vh;
+	left:30vw;
+	right:30vw; 
+}</style> <div class="footer"> <div class="search_form"> <div class="search_headline" style="text-align:center">what are you looking for?</div> <div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"></div> <div class="search_button">search!</div> </div> </div>   <footer> <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M"></script> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">var map = null;
 
 	function centerMap(position) 
 	{	
@@ -175,7 +215,7 @@
 		$(".header").toggleClass("header_expanded");
 	});
 
-	$(".footer").on("click",function(){
+	$(".search_headline").on("click",function(){
 		$(".footer").toggleClass("footer_expanded");
 	});</script> <script>var app = angular.module('myApp', []);
 
