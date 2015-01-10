@@ -42,18 +42,14 @@ body {overflow:hidden;}
 	overflow:hidden;
 }
 
-.header_expanded{
-	height:90vh !important;
-}
-
 .logo{
 	background-image: url(images/somewherebetween.67a70fc7.png);
 	background-repeat: no-repeat;
 	background-size: 100%;
 	background-position: 50%;
 	position: absolute;
-	top: 0px;
-	left: 0px;
+	top: 0vh;
+	left: 7vw;
 	height: 10vh;
 	width: 30vw;
 	min-width: 8vh;
@@ -144,9 +140,37 @@ body {overflow:hidden;}
 	z-index:1;
 }
 
-.footer_expanded{
+.display_form{
 	top:10vh !important;
-}</style> <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">  <body> <div class="nickname hide"> let's get started by creating a nickname<br><br> <input type="text" placeholder="nickname" class="nicknameval"><br><br> <i>(hint: use a nickname your friends would <br> recognize, such as FLastname or FirstnameL)</i><br><br> <div class="setnickname">let's go somewhere!</div> </div> <div class="header"> <div class="logo"></div> <div class="menu_icon"></div> <div class="invite_form" ng-controller="MyController"> <div style="text-align:center">invite others!</div> <div class="friend_address_div"><input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"></div> <div class="send_invitation_button">send invitation </div> <div class="leave_group leave_group_button">leave group</div> </div> </div>  <div class="main"> <div id="map-canvas"></div> </div> <style>.venue{
+}
+
+.chat_icon, .invite_icon, .search_icon{
+	width:10vw;
+	height:10vh;
+	position:absolute;
+	top:0vh;
+	background-image: url(images/menu-icon.a7a5d35a.png);
+	background-repeat: no-repeat;
+	background-size: 60%;
+	background-position: 50%;
+	min-width: 8vh;
+	max-width: 12vh;
+}
+
+.chat_icon{
+	background-color:blue;
+	left:32vw;
+}
+
+.invite_icon{
+	background-color:green;
+	left:57vw;
+}
+
+.search_icon{
+	background-color:red;
+	left:84vw;
+}</style> <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">  <body> <div class="nickname hide"> let's get started by creating a nickname<br><br> <input type="text" placeholder="nickname" class="nicknameval"><br><br> <i>(hint: use a nickname your friends would <br> recognize, such as FLastname or FirstnameL)</i><br><br> <div class="setnickname">let's go somewhere!</div> </div> <div class="header"> <div class="logo"></div> <div class="chat_icon"></div> <div class="search_icon"></div> <div class="invite_icon"></div> </div> <div class="main"> <div id="map-canvas"></div> </div> <style>.venue{
 	width:100%;
 }
 
@@ -184,7 +208,13 @@ body {overflow:hidden;}
 	top:12vh;
 	left:30vw;
 	right:30vw; 
-}</style> <div class="footer"> <div class="search_form"> <div class="search_headline" style="text-align:center">what are you looking for?</div> <div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"></div> <div class="search_button">search!</div> </div> </div>   <footer> <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M"></script> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">var map = null;
+}</style> <div class="search"> <div class="search_form"> <div class="search_headline" style="text-align:center">what are you looking for?</div> <div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"></div> <div class="search_button">search!</div> </div> </div>  <style>.chat_form{
+	text-align:center;
+	width:100vw;
+}</style> <div class="chat_form"> <div class="search_form"> <div class="search_headline" style="text-align:center">what are you looking for?</div> <div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"></div> <div class="search_button">search!</div> </div> </div>  <style>.invvite_form{
+	text-align:center;
+	width:100vw;
+}</style> <div class="invite_form" ng-controller="MyController"> <div style="text-align:center">invite others!</div> <div class="friend_address_div"> <input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"> </div> <div class="send_invitation_button">send invitation </div> <div class="leave_group leave_group_button">leave group</div> </div>   <footer> <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M"></script> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">var map = null;
 
 	function centerMap(position) 
 	{	
@@ -211,12 +241,16 @@ body {overflow:hidden;}
 
     }
 
-	google.maps.event.addDomListener(window, 'load', initialize);</script> <script>$(".menu_icon").on("click",function(){
-		$(".header").toggleClass("header_expanded");
+	google.maps.event.addDomListener(window, 'load', initialize);</script> <script>$(".search_icon").on("click",function(){
+		$(".search_form").toggleClass("display_form");
 	});
 
-	$(".search_headline").on("click",function(){
-		$(".footer").toggleClass("footer_expanded");
+	$(".invite_icon").on("click",function(){
+		$(".invite_form").toggleClass("display_form");
+	});
+
+	$(".chat_icon").on("click",function(){
+		$(".chat_form").toggleClass("display_form");
 	});</script> <script>var app = angular.module('myApp', []);
 
 app.run(function($rootScope){

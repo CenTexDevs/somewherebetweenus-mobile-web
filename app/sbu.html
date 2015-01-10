@@ -50,18 +50,14 @@ body {overflow:hidden;}
 	overflow:hidden;
 }
 
-.header_expanded{
-	height:90vh !important;
-}
-
 .logo{
 	background-image: url(images/somewherebetween.png);
 	background-repeat: no-repeat;
 	background-size: 100%;
 	background-position: 50%;
 	position: absolute;
-	top: 0px;
-	left: 0px;
+	top: 0vh;
+	left: 7vw;
 	height: 10vh;
 	width: 30vw;
 	min-width: 8vh;
@@ -152,8 +148,36 @@ body {overflow:hidden;}
 	z-index:1;
 }
 
-.footer_expanded{
+.display_form{
 	top:10vh !important;
+}
+
+.chat_icon, .invite_icon, .search_icon{
+	width:10vw;
+	height:10vh;
+	position:absolute;
+	top:0vh;
+	background-image: url(images/menu-icon.png);
+	background-repeat: no-repeat;
+	background-size: 60%;
+	background-position: 50%;
+	min-width: 8vh;
+	max-width: 12vh;
+}
+
+.chat_icon{
+	background-color:blue;
+	left:32vw;
+}
+
+.invite_icon{
+	background-color:green;
+	left:57vw;
+}
+
+.search_icon{
+	background-color:red;
+	left:84vw;
 }
 
 </style>
@@ -174,15 +198,9 @@ body {overflow:hidden;}
 
 <div class="header">
 	<div class="logo"></div>
-	<div class="menu_icon"></div>
-	<div class="invite_form" ng-controller="MyController">
-		<div style="text-align:center">invite others!</div>
-		<div class="friend_address_div"><input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"/></div>
-		<div class="send_invitation_button">send invitation </div>
-		<div class="leave_group leave_group_button">leave group</div>
-		</div>
-	</div>
-
+	<div class="chat_icon"></div>
+	<div class="search_icon"></div>
+	<div class="invite_icon"></div>
 </div>
 
 <div class="main">
@@ -234,7 +252,7 @@ body {overflow:hidden;}
 
 </style>
 
-<div class="footer">
+<div class="search">
 	<div class="search_form">
 		<div class="search_headline" style="text-align:center">what are you looking for?</div>
 		<div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"/></div>
@@ -243,6 +261,39 @@ body {overflow:hidden;}
 	</div>
 </div>
 
+<style>
+.chat_form{
+	text-align:center;
+	width:100vw;
+}
+</style>
+
+<div class="chat_form">
+	<div class="search_form">
+		<div class="search_headline" style="text-align:center">what are you looking for?</div>
+		<div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"/></div>
+		<div class="search_button">search!</div>
+		</div>
+	</div>
+</div>
+
+<style>
+.invvite_form{
+	text-align:center;
+	width:100vw;
+}
+
+</style>
+
+<div class="invite_form" ng-controller="MyController">
+	<div style="text-align:center">invite others!</div>
+	<div class="friend_address_div">
+		<input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"/>
+	</div>
+	<div class="send_invitation_button">send invitation </div>
+	<div class="leave_group leave_group_button">leave group</div>
+	</div>
+</div>
 
 </body>
 <footer>
@@ -285,15 +336,17 @@ body {overflow:hidden;}
 
 <script>
 
-
-	$(".menu_icon").on("click",function(){
-		$(".header").toggleClass("header_expanded");
+	$(".search_icon").on("click",function(){
+		$(".search_form").toggleClass("display_form");
 	});
 
-	$(".search_headline").on("click",function(){
-		$(".footer").toggleClass("footer_expanded");
+	$(".invite_icon").on("click",function(){
+		$(".invite_form").toggleClass("display_form");
 	});
 
+	$(".chat_icon").on("click",function(){
+		$(".chat_form").toggleClass("display_form");
+	});
 	
 </script>
 
