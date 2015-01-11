@@ -78,16 +78,6 @@ body {overflow:hidden;}
 	max-width: 12vh;
 }
 
-.invite_form{
-	text-align:center;
-	position:relative;
-	top:10vh;
-	height:80vh;
-	margin-left:auto;
-	margin-right:auto;
-	width:300px;
-}
-
 .friend_address{
 	width:100%;
 }
@@ -134,7 +124,7 @@ body {overflow:hidden;}
 	top:10vh;
 	left:0px;
 	right:0px;
-	bottom:10vh;
+	bottom:0vh;
 	background-color:blue;
 }
 
@@ -217,6 +207,10 @@ body {overflow:hidden;}
 .search_form{
 	text-align:center;
 	width:100vw;
+	top:100vh;
+	height:90vh;
+	position:absolute;
+	background-color:rgba(225,225,225,0.9);
 }
 
 .search_headline{
@@ -252,12 +246,10 @@ body {overflow:hidden;}
 
 </style>
 
-<div class="search">
-	<div class="search_form">
-		<div class="search_headline" style="text-align:center">what are you looking for?</div>
-		<div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"/></div>
-		<div class="search_button">search!</div>
-		</div>
+<div class="search_form">
+	<div class="search_headline" style="text-align:center">what are you looking for?</div>
+	<div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"/></div>
+	<div class="search_button">search!</div>
 	</div>
 </div>
 
@@ -265,22 +257,27 @@ body {overflow:hidden;}
 .chat_form{
 	text-align:center;
 	width:100vw;
+	height:90vh;
+	top:100vh;
+	position:absolute;
+	background-color:rgba(225,225,225),0.9);
 }
 </style>
 
 <div class="chat_form">
-	<div class="search_form">
-		<div class="search_headline" style="text-align:center">what are you looking for?</div>
-		<div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"/></div>
-		<div class="search_button">search!</div>
-		</div>
-	</div>
+	<div class="search_headline" style="text-align:center">what are you looking for?</div>
+	<div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"/></div>
+	<div class="search_button">search!</div>
 </div>
 
 <style>
-.invvite_form{
+.invite_form{
 	text-align:center;
 	width:100vw;
+	height:90vh;
+	top:100vh;
+	position:absolute;
+	background-color:rgba(225,225,225,0.9);
 }
 
 </style>
