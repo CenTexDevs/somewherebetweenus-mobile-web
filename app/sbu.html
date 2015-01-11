@@ -341,14 +341,20 @@ body {overflow:hidden;}
 <script>
 
 	$(".search_icon").on("click",function(){
+		$(".chat_form").removeClass("display_form");
+		$(".invite_form").removeClass("display_form");
 		$(".search_form").toggleClass("display_form");
 	});
 
 	$(".invite_icon").on("click",function(){
+		$(".chat_form").removeClass("display_form");
+		$(".search_form").removeClass("display_form");
 		$(".invite_form").toggleClass("display_form");
 	});
 
 	$(".chat_icon").on("click",function(){
+		$(".invite_form").removeClass("display_form");
+		$(".search_form").removeClass("display_form");
 		$(".chat_form").toggleClass("display_form");
 	});
 	
