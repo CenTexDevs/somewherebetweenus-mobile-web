@@ -84,16 +84,16 @@ body {overflow:hidden;}
 
 .friend_address_div{
 	position:absolute;
-	top:10%;
-	left:10%;
-	right:10%; 
+	top:10vh;
+	left:30vw;
+	right:30vw; 
 }
 
 .send_invitation_button{
 	position:absolute;
-	top:20%;
-	left:10%;
-	right:10%; 
+	top:20vw;
+	left:30vw;
+	right:30vw; 
 	background-color:grey;
 	border-style:solid;
 	border-width:3px;
@@ -109,9 +109,9 @@ body {overflow:hidden;}
 
 .leave_group_button{
 	position:absolute;
-	top:30%;
-	left:10%;
-	right:10%; 
+	top:30vh;
+	left:30vw;
+	right:30vw; 
 	background-color:grey;
 	border-style:solid;
 	border-width:3px;
@@ -255,7 +255,7 @@ body {overflow:hidden;}
 
 <div class="search_form">
 	<div class="search_headline" style="text-align:center">what are you looking for?</div>
-	<div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"/></div>
+	<div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee)"/></div>
 	<div class="search_button">search!</div>
 	</div>
 </div>
@@ -269,12 +269,29 @@ body {overflow:hidden;}
 	position:absolute;
 	background-color:rgba(225,225,225,0.9);
 }
+
+.dialogue{
+	margin:2vw;
+	text-align:left;
+}
+
+.message_input{
+	position:absolute;
+	bottom:5px;
+	left: 25vw;
+	right: 156vw;
+	width: 50vw;
+}
 </style>
 
 <div class="chat_form">
-	<div class="search_headline" style="text-align:center">what are you looking for?</div>
-	<div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee, mexican food, donuts)"/></div>
-	<div class="search_button">search!</div>
+	<div class="dialogue" style="text-align:left">
+		<span style="color:green">Rob: Here's some sample text</span><br>
+		<span style="color:blue">Tom: Line 2</span><br>
+		<span style="color:green">Jim: Some more text</span><br>
+		<span style="color:blue">Rob: Last line</span><br>
+	</div>
+	<div class="message_input"><input type="text" /><input type="button" value="post"></div>
 </div>
 
 <style>
