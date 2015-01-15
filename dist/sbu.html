@@ -229,7 +229,7 @@ body {overflow:hidden;}
 	left: 25vw;
 	right: 156vw;
 	width: 50vw;
-}</style> <div class="chat_form"> <div class="dialogue" style="text-align:left"> <span style="color:green">Rob: Here's some sample text</span><br> <span style="color:blue">Tom: Line 2</span><br> <span style="color:green">Jim: Some more text</span><br> <span style="color:blue">Rob: Last line</span><br> </div> <div class="message_input"><input type="text"><input type="button" value="post"></div> </div> <style>.invite_form{
+}</style> <div class="chat_form"> <div class="dialogue" style="text-align:left"> <div id="dialogue_div" name="dialogue_div" style="height:80vh;width:96vw;overflow:auto"> </div> </div> <div class="message_input"><input type="text"><input type="button" value="post"></div> </div> <style>.invite_form{
 	text-align:center;
 	width:100vw;
 	height:90vh;
@@ -386,8 +386,8 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 		  type: "POST",
 		  url: "http://somewherebetweenus-server.herokuapp.com/Meeting/create",
 		  data: {"nickname":nickname,
-			"meetingid":meetingID,
-			"guestid":guestID},
+			"meetingID":meetingID,
+			"guestID":guestID},
 		  success: function(data){
 		  	$(".nickname").addClass("hide");
 		  	console.log('all good');
@@ -442,7 +442,7 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 		$.ajax({
 		  type: "POST",
 		  url: "http://somewherebetweenus-server.herokuapp.com/Meeting/getmeetingmarkers",
-		  data: {"meetingid":meetingID},
+		  data: {"meetingID":meetingID},
 		  success: function(data){
 		  	data = JSON.parse(data);
 		  	displayMapMarkers(data)
@@ -500,4 +500,31 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 	}
 
 	//start update loop
-	setInterval(function(){updateMapMarkers();},10000);</script> </footer> 
+	setInterval(function(){updateMapMarkers();},10000);</script> <script>//scripts for chat
+
+setInterval(function(){refreshChat();},5000);
+
+function refreshChat()
+{
+	var meetingID = $.cookie("meetingID");
+
+	$.ajax({
+		type: "POST",
+		url: "http://somewherebetweenus-server.herokuapp.com/Meeting/getcomments",
+		data: {"meetingID":meetingID},
+		success: function(data){
+			var _data = data;
+			for(var i=0; i<10; i++)
+				_data = _data + _data;
+
+		  	$("#dialogue_div").html(_data);
+		  	$("#dialogue_div").scrollTop($("#dialogue_div")[0].scrollHeight);
+		  	console.log('all good');
+		},
+		fail:function(){
+		  	console.log('nope');
+
+		}
+	});
+
+}</script> </footer> 
