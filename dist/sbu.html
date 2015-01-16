@@ -160,7 +160,7 @@ body {overflow:hidden;}
 }
 
 .invite_icon{
-	background-image: url(images/add_user_icon.df7b7f73.png);
+	background-image: url(images/add_user_icon.a0651b3c.png);
 	left:57vw;
 }
 
@@ -229,7 +229,7 @@ body {overflow:hidden;}
 	left: 25vw;
 	right: 156vw;
 	width: 50vw;
-}</style> <div class="chat_form"> <div class="dialogue" style="text-align:left"> <div id="dialogue_div" name="dialogue_div" style="height:80vh;width:96vw;overflow:auto"> </div> </div> <div class="message_input"><input type="text"><input type="button" value="post"></div> </div> <style>.invite_form{
+}</style> <div class="chat_form"> <div class="dialogue" style="text-align:left"> <div id="dialogue_div" name="dialogue_div" style="height:80vh;width:96vw;overflow:auto"> </div> </div> <div class="message_input"><input class="comment_text" type="text"><input class="post_comment" type="button" value="post"></div> </div> <style>.invite_form{
 	text-align:center;
 	width:100vw;
 	height:90vh;
@@ -375,19 +375,33 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 			$(".nickname").removeClass("hide");
 
 });</script> <script type="text/javascript">$(".setnickname").on("click",function(){
-		//set nickname
+
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(registerGuest,nolocation);
+		} else {
+			alert("Geolocation is not supported by this browser.");
+		}
+	});
+
+	var registerGuest = function(position)
+	{
+        //set nickname
 		var nickname = $(".nicknameval").val();
 		$.cookie("nickname",nickname,{expires:10});
 
 		var meetingID = $.cookie("meetingID");
 		var guestID = $.cookie("guestID");
+		var latitude = position.coords.latitude;
+		var longitude = position.coords.longitude;
 
 		$.ajax({
 		  type: "POST",
 		  url: "http://somewherebetweenus-server.herokuapp.com/Meeting/create",
 		  data: {"nickname":nickname,
 			"meetingID":meetingID,
-			"guestID":guestID},
+			"guestID":guestID,
+			"latitude":latitude,
+			"longitude":longitude},
 		  success: function(data){
 		  	$(".nickname").addClass("hide");
 		  	console.log('all good');
@@ -397,7 +411,7 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 
 		  }
 		});
-	});
+	};
 
 	$(".send_invitation_button").on("click",function(){
 		//set nickname
@@ -504,20 +518,52 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 
 setInterval(function(){refreshChat();},5000);
 
+$(".post_comment").on("click",function(){postChat();});
+
+function postChat()
+{
+
+	var comment = $(".comment_text").val();
+	var _data = {"guestID":$.cookie("guestID"),
+			"meetingID":$.cookie("meetingID"),
+			"comment":comment};
+
+	$.ajax({
+		type: "POST",
+		url: "http://somewherebetweenus-server.herokuapp.com/Meeting/addcomment",
+		data:_data,
+		success: function(data){
+			console.log('all good');
+		},
+		fail:function(){
+		  	console.log('nope');
+
+		}
+	});
+}
+
 function refreshChat()
 {
+
+	if($(".chat_form").hasClass("display_form") == false)
+		return;
+
 	var meetingID = $.cookie("meetingID");
+
+	if(meetingID == null)
+		return;
 
 	$.ajax({
 		type: "POST",
 		url: "http://somewherebetweenus-server.herokuapp.com/Meeting/getcomments",
 		data: {"meetingID":meetingID},
 		success: function(data){
-			var _data = data;
-			for(var i=0; i<10; i++)
-				_data = _data + _data;
+			var comments = JSON.parse(data);
+			var output = "";
+			for(var i=0; i<comments.length; i++)
+				output = output + comments[i].comment+"<br>";
 
-		  	$("#dialogue_div").html(_data);
+		  	$("#dialogue_div").html(output);
 		  	$("#dialogue_div").scrollTop($("#dialogue_div")[0].scrollHeight);
 		  	console.log('all good');
 		},
@@ -527,4 +573,31 @@ function refreshChat()
 		}
 	});
 
+}</script> <script>//search
+
+$(".search_button").on("click",function(){search_venues();});
+
+function search_venues()
+{
+
+	var meetingID = $.cookie("meetingID");
+	var venueType = $(".venue").val();
+	var _data = {
+			"meetingID":meetingID,
+			"venueType":venueType
+		};
+
+	$.ajax({
+		type: "POST",
+		url: "http://somewherebetweenus-server.herokuapp.com/Yelp/findVenues",
+		data:_data,
+		success: function(data){
+			console.log(data);
+			console.log('all good');
+		},
+		fail:function(){
+		  	console.log('nope');
+
+		}
+	});
 }</script> </footer> 
