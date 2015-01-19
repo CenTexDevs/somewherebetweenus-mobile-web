@@ -445,6 +445,13 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 		location.reload();
 
 	});</script> <script type="text/javascript">var mapmarkers = [];
+	var venueMarkers = [];
+	var infowindows = [];
+
+	$(".search_button").on("click",function(){
+		$(".search_form").removeClass("display_form");
+		search_venues();
+	});
 
 	var updateMapMarkers = function(){
 
@@ -504,17 +511,104 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 			mapmarkers[i].setMap(map);
 	}
 
+
+
+	var search_venues = function()
+	{
+
+		var meetingID = $.cookie("meetingID");
+		var venueType = $(".venue").val();
+		var _data = {
+				"meetingID":meetingID,
+				"venueType":venueType
+			};
+
+		$.ajax({
+			type: "POST",
+			url: "http://somewherebetweenus-server.herokuapp.com/Yelp/findVenues",
+			data:_data,
+			success: function(data){
+				var venues = JSON.parse(data);
+				displaySearchResults(venues)
+			},
+			fail:function(){
+			  	console.log('nope');
+
+			}
+		});
+	}
+
+	var displaySearchResults = function(venues){
+
+		clearSearchResults();
+
+	    for (var i = 0; i < venues.length; i++) 
+	    {
+			  	var myLatlng = new google.maps.LatLng(venues[i].coordinates.latitude,venues[i].coordinates.longitude);
+
+			  	var marker = new google.maps.Marker({
+			      	position: myLatlng,
+			      	map: map,
+			    	title: 'Hello World!'
+			  	});
+
+			 	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
+
+			 	var venue = venues[i];
+
+			 	var params = "'" + venue.name + "'," + venue.coordinates.latitude + "," + venue.coordinates.longitude;
+
+			 	var html = '<span class="venue_name">' + venue.name + '</span><br>';
+			 	html = html + '<span class="vote_link" ><a href="javascript:vote('+params+');"> Vote!</a></span>';
+
+				var infowindow = new google.maps.InfoWindow();
+                makeInfoWindowEvent(map, infowindow, html, marker);
+			  	venueMarkers[venueMarkers.length] = marker;
+	    	}
+
+		for (var i = 0; i < venueMarkers.length; i++) 
+			venueMarkers[i].setMap(map);
+	}
+
+	var clearSearchResults = function()
+	{
+		for (var i = 0; i < venueMarkers.length; i++) 
+			venueMarkers[i].setMap(null);
+
+		venueMarkers = [];
+
+	}
+
 	var clearMapMarkers = function()
 	{
 		for (var i = 0; i < mapmarkers.length; i++) 
 			mapmarkers[i].setMap(null);
 
 		mapmarkers = [];
-
 	}
 
+
+    var makeInfoWindowEvent = function(map, infowindow, contentString, marker) 
+    {
+        infowindows.push(infowindow);
+
+        google.maps.event.addListener(marker, 'click', function() {
+            for(var i=0; i<infowindows.length; i++)
+                infowindows[i].close();
+            infowindow.setContent(contentString);
+            infowindow.open(map, marker);
+        });
+    }
+
 	//start update loop
-	setInterval(function(){updateMapMarkers();},10000);</script> <script>//scripts for chat
+	setInterval(function(){updateMapMarkers();},60000);
+
+	var vote = function(name,latitude,longitude)
+	{
+		alert(name + latitude + longitude);
+		//bust default anchor action
+		return false;
+	}</script> <script>//scripts for chat
 
 setInterval(function(){refreshChat();},5000);
 
@@ -573,66 +667,4 @@ function refreshChat()
 		}
 	});
 
-}</script> <script>//search
-
-	var venueMarkers = [];
-
-	$(".search_button").on("click",function(){search_venues();});
-
-	var search_venues = function()
-	{
-
-		var meetingID = $.cookie("meetingID");
-		var venueType = $(".venue").val();
-		var _data = {
-				"meetingID":meetingID,
-				"venueType":venueType
-			};
-
-		$.ajax({
-			type: "POST",
-			url: "http://somewherebetweenus-server.herokuapp.com/Yelp/findVenues",
-			data:_data,
-			success: function(data){
-				var venues = JSON.parse(data);
-				displaySearchResults(venues)
-			},
-			fail:function(){
-			  	console.log('nope');
-
-			}
-		});
-	}
-
-	var displaySearchResults = function(venues){
-
-		clearSearchResults();
-
-	    for (var i = 0; i < venues.length; i++) 
-	    {
-			  	var myLatlng = new google.maps.LatLng(venues[i].coordinates.latitude,venues[i].coordinates.longitude);
-
-			  	var marker = new google.maps.Marker({
-			      	position: myLatlng,
-			      	map: map,
-			    	title: 'Hello World!'
-			  	});
-
-			 	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
-
-
-			  venueMarkers[venueMarkers.length] = marker;
-	    	}
-
-		for (var i = 0; i < venueMarkers.length; i++) 
-			venueMarkers[i].setMap(map);
-	}
-
-	var clearSearchResults = function()
-	{
-		for (var i = 0; i < venueMarkers.length; i++) 
-			venueMarkers[i].setMap(null);
-
-		venueMarkers = [];
-
-	}</script> </footer> 
+}</script> <script>//search</script> </footer> 
