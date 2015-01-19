@@ -679,7 +679,7 @@ $(document).ready(function(){
 
 			 	var venue = venues[i];
 
-			 	var params = "'" + venue.name + "'," + venue.coordinates.latitude + "," + venue.coordinates.longitude;
+			 	var params = '"' + venue.name + '",' + venue.coordinates.latitude + ',' + venue.coordinates.longitude;
 
 			 	var html = '<span class="venue_name">' + venue.name + '</span><br>';
 			 	html = html + '<span class="vote_link" ><a href="javascript:vote('+params+');"> Vote!</a></span>';
