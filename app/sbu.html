@@ -570,6 +570,7 @@ $(document).ready(function(){
 	var mapmarkers = [];
 	var venueMarkers = [];
 	var infowindows = [];
+	var venues = [];
 
 	$(".search_button").on("click",function(){
 		$(".search_form").removeClass("display_form");
@@ -661,13 +662,14 @@ $(document).ready(function(){
 		});
 	}
 
-	var displaySearchResults = function(venues){
+	var displaySearchResults = function(_venues){
 
 		clearSearchResults();
+		venues = [];
 
-	    for (var i = 0; i < venues.length; i++) 
+	    for (var i = 0; i < _venues.length; i++) 
 	    {
-			  	var myLatlng = new google.maps.LatLng(venues[i].coordinates.latitude,venues[i].coordinates.longitude);
+			  	var myLatlng = new google.maps.LatLng(_venues[i].coordinates.latitude,_venues[i].coordinates.longitude);
 
 			  	var marker = new google.maps.Marker({
 			      	position: myLatlng,
@@ -677,12 +679,12 @@ $(document).ready(function(){
 
 			 	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
 
-			 	var venue = venues[i];
-
-			 	var params = '"' + venue.name + '",' + venue.coordinates.latitude + ',' + venue.coordinates.longitude;
+			 	var venue = _venues[i];
+			 	venues[venue.id] = venue;
 
 			 	var html = '<span class="venue_name">' + venue.name + '</span><br>';
-			 	html = html + '<span class="vote_link" ><a href="javascript:vote('+params+');"> Vote!</a></span>';
+			 	html = html + '<span class="vote_link" ><a href=\'javascript:vote('+venue.id+');\'> Vote!</a></span>';
+
 
 				var infowindow = new google.maps.InfoWindow();
                 makeInfoWindowEvent(map, infowindow, html, marker);
@@ -724,11 +726,13 @@ $(document).ready(function(){
     }
 
 	//start update loop
+	setTimeout(function(){updateMapMarkers();},3000);
 	setInterval(function(){updateMapMarkers();},60000);
 
-	var vote = function(name,latitude,longitude)
+	var vote = function(id)
 	{
-		alert(name + latitude + longitude);
+		venue = venues[id];
+		alert(venue.id + venue.name + venue.coordinates.latitude + venue.coordinates.longitude);
 		//bust default anchor action
 		return false;
 	}
