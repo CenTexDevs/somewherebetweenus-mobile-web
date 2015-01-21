@@ -609,9 +609,56 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 	var vote = function(id)
 	{
 		venue = venues[id];
-		alert(venue.id + venue.name + venue.coordinates.latitude + venue.coordinates.longitude);
+		addVenue(venue.id,venue.name,venue.coordinates.latitude,venue.coordinates.longitude);
 		//bust default anchor action
 		return false;
+	}
+
+	var addVenue = function(venueID,businessname,latitude,longitude)
+	{
+		var _data = {
+			venueID: venueID,
+			meetingID: $.cookie("meetingID"),
+			businessname: businessname,
+			yelpID: 0,
+			latitude: latitude,
+			longitude: longitude
+		};
+
+		$.ajax({
+			type: "POST",
+			url: "http://somewherebetweenus-server.herokuapp.com/Venue/addvenue",
+			data:_data,
+			success: function(data){
+				addVoter(venueID,$.cookie("meetingID"),$.cookie("guestID"));
+			},
+			fail:function(){
+			  	console.log('nope');
+
+			}
+		});
+	}
+
+	var addVoter = function(venueID,meetingID,guestID)
+	{
+		var _data = {
+			venueID: venueID,
+			meetingID: meetingID,
+			guestID:guestID
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "http://somewherebetweenus-server.herokuapp.com/Venue/addvoter",
+			data:_data,
+			success: function(data){
+				console.log('all good');
+			},
+			fail:function(){
+			  	console.log('nope');
+
+			}
+		});
 	}</script> <script>//scripts for chat
 
 setInterval(function(){refreshChat();},5000);
