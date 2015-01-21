@@ -490,7 +490,7 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 			  	var marker = new google.maps.Marker({
 			      	position: myLatlng,
 			      	map: map,
-			    	title: 'Hello World!'
+			    	title:markers[i].nickname
 			  	});
 
 			  	if(markers[i].nickname == $.cookie("nickname"))
@@ -503,7 +503,18 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 	    	}
 	    	if(markers[i].type == 'venue')
 	    	{
+			  	var myLatlng = new google.maps.LatLng(markers[i].latitude,markers[i].longitude);
 
+			  	var marker = new google.maps.Marker({
+			      	position: myLatlng,
+			      	map: map,
+			    	title: markers[i].name
+			  	});
+
+			  	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
+
+
+			  mapmarkers[mapmarkers.length] = marker;
 	    	}
 	    }
 
