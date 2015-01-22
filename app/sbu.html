@@ -569,7 +569,9 @@ $(document).ready(function(){
 
 	var mapmarkers = [];
 	var venueMarkers = [];
-	var infowindows = [];
+	var searchinfowindows = [];
+	var guestinfowindows = [];
+	var venueinfowindows = [];
 	var venues = [];
 
 	$(".search_button").on("click",function(){
@@ -622,7 +624,13 @@ $(document).ready(function(){
 				 	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
 
 
-			  mapmarkers[mapmarkers.length] = marker;
+				mapmarkers[mapmarkers.length] = marker;
+
+			 	var html = '<div style="width:150px"><span style="font-weight:bold" class="venue_name">' + markers[i].nickname + '</span><br></div>';
+
+				var infowindow = new google.maps.InfoWindow();
+	            makeInfoWindowEvent(map, infowindow,guestinfowindows, html, marker);
+
 	    	}
 	    	if(markers[i].type == 'venue')
 	    	{
@@ -637,7 +645,13 @@ $(document).ready(function(){
 			  	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/orange-dot.png');
 
 
-			  mapmarkers[mapmarkers.length] = marker;
+       			mapmarkers[mapmarkers.length] = marker;
+
+			 	var html = '<div style="width:150px"><span style="font-weight:bold" class="venue_name">' + markers[i].name + '</span><br>';
+			 	html = html + '<span>Votes:'+markers[i].voters+'</span></div>';
+
+				var infowindow = new google.maps.InfoWindow();
+	            makeInfoWindowEvent(map, infowindow,venueinfowindows, html, marker);
 	    	}
 	    }
 
@@ -680,25 +694,26 @@ $(document).ready(function(){
 
 	    for (var i = 0; i < _venues.length; i++) 
 	    {
+			 	var venue = _venues[i];
+
 			  	var myLatlng = new google.maps.LatLng(_venues[i].coordinates.latitude,_venues[i].coordinates.longitude);
 
 			  	var marker = new google.maps.Marker({
 			      	position: myLatlng,
 			      	map: map,
-			    	title: 'Hello World!'
+			    	title: venue.name
 			  	});
 
 			 	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
 
-			 	var venue = _venues[i];
 			 	venues[venue.id] = venue;
 
-			 	var html = '<span class="venue_name">' + venue.name + '</span><br>';
-			 	html = html + '<span class="vote_link" ><a href=\'javascript:vote('+venue.id+');\'> Vote!</a></span>';
+			 	var html = '<div style="width:150px"><span style="font-weight:bold" class="venue_name">' + venue.name + '</span><br>';
+			 	html = html + '<span class="vote_link" ><a href=\'javascript:vote('+venue.id+');\'> Vote!</a></span></div>';
 
 
 				var infowindow = new google.maps.InfoWindow();
-                makeInfoWindowEvent(map, infowindow, html, marker);
+                makeInfoWindowEvent(map, infowindow,searchinfowindows, html, marker);
 			  	venueMarkers[venueMarkers.length] = marker;
 	    	}
 
@@ -724,13 +739,13 @@ $(document).ready(function(){
 	}
 
 
-    var makeInfoWindowEvent = function(map, infowindow, contentString, marker) 
+    var makeInfoWindowEvent = function(map, infowindow, infoWindowsArray,contentString, marker) 
     {
-        infowindows.push(infowindow);
+        infoWindowsArray.push(infowindow);
 
         google.maps.event.addListener(marker, 'click', function() {
-            for(var i=0; i<infowindows.length; i++)
-                infowindows[i].close();
+            for(var i=0; i<infoWindowsArray.length; i++)
+                infoWindowsArray[i].close();
             infowindow.setContent(contentString);
             infowindow.open(map, marker);
         });
