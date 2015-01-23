@@ -131,14 +131,14 @@ body {overflow:hidden;}
 }
 
 .display_form{
-	top:10vh !important;
-	-webkit-transition:top 1s, -webkit-transform 2s;
-	transition:top 1s, transform 2s;
+	height:90vh !important;
+	-webkit-transition:height 1s, -webkit-transform 2s;
+	transition:height 1s, transform 2s;
 }
 
 .invite_form, .chat_form, .search_form{
-	-webkit-transition:top 1s, -webkit-transform 2s;
-	transition:top 1s, transform 2s;
+	-webkit-transition:height 1s, -webkit-transform 2s;
+	transition:height 1s, transform 2s;
 
 }
 
@@ -174,8 +174,9 @@ body {overflow:hidden;}
 .search_form{
 	text-align:center;
 	width:100vw;
-	top:100vh;
-	height:90vh;
+	overflow:hidden;
+	bottom:0px;
+	height:0vh;
 	position:absolute;
 	background-color:rgba(225,225,225,0.9);
 }
@@ -209,11 +210,12 @@ body {overflow:hidden;}
 	top:12vh;
 	left:30vw;
 	right:30vw; 
-}</style> <div class="search_form"> <div class="search_headline" style="text-align:center">what are you looking for?</div> <div class="venue_type_div"><input class="venue" type="text" placeholder="(i.e. coffee)"></div> <div class="search_button">search!</div> </div>  <style>.chat_form{
+}</style> <div class="search_form"> <div class="search_headline" style="text-align:center">what are you looking for?</div> <div class="venue_type_div"><input id="search_type" class="venue" type="text" placeholder="(i.e. coffee)"></div> <div class="search_button">search!</div> </div>  <style>.chat_form{
 	text-align:center;
 	width:100vw;
-	height:90vh;
-	top:100vh;
+	overflow:hidden;
+	bottom:0px;
+	height:0vh;
 	position:absolute;
 	background-color:rgba(225,225,225,0.9);
 }
@@ -232,8 +234,9 @@ body {overflow:hidden;}
 }</style> <div class="chat_form"> <div class="dialogue" style="text-align:left"> <div id="dialogue_div" name="dialogue_div" style="height:80vh;width:96vw;overflow:auto"> </div> </div> <div class="message_input"><input class="comment_text" type="text"><input class="post_comment" type="button" value="post"></div> </div> <style>.invite_form{
 	text-align:center;
 	width:100vw;
-	height:90vh;
-	top:100vh;
+	overflow:hidden;
+	bottom:0px;
+	height:0vh;
 	position:absolute;
 	background-color:rgba(225,225,225,0.9);
 }</style> <div class="invite_form" ng-controller="MyController"> <div style="text-align:center">invite others!</div> <div class="friend_address_div"> <input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"> </div> <div class="send_invitation_button">send invitation </div> <div class="leave_group leave_group_button">leave group</div> </div>   <footer> <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M"></script> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">var map = null;
@@ -267,6 +270,8 @@ body {overflow:hidden;}
 		$(".chat_form").removeClass("display_form");
 		$(".invite_form").removeClass("display_form");
 		$(".search_form").toggleClass("display_form");
+		$(".venue").focus();
+		
 	});
 
 	$(".invite_icon").on("click",function(){
