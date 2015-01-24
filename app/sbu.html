@@ -640,9 +640,9 @@ $(document).ready(function(){
 	    	if(markers[i].type == 'venue')
 	    	{
 
-	    		if(markers[i].voters.length == 0)
+	    		if(markers[i].voters == 0)
 	    			continue;
-	    		
+
 			  	var myLatlng = new google.maps.LatLng(markers[i].latitude,markers[i].longitude);
 
 			  	var marker = new google.maps.Marker({
