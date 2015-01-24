@@ -516,6 +516,10 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 	    	}
 	    	if(markers[i].type == 'venue')
 	    	{
+
+	    		if(markers[i].voters.length == 0)
+	    			continue;
+	    		
 			  	var myLatlng = new google.maps.LatLng(markers[i].latitude,markers[i].longitude);
 
 			  	var marker = new google.maps.Marker({
@@ -531,6 +535,7 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 
 			 	var html = '<div style="width:150px"><span style="font-weight:bold" class="venue_name">' + markers[i].name + '</span><br>';
 			 	html = html + '<span>Votes:'+markers[i].voters+'</span></div>';
+			 	html = html + '<span class="vote_link" ><a href=\'javascript:addVoter('+markers[i].venueID+');\'> Vote!</a></span></div>';
 
 				var infowindow = new google.maps.InfoWindow();
 	            makeInfoWindowEvent(map, infowindow,venueinfowindows, html, marker);
@@ -661,7 +666,7 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 			url: "http://somewherebetweenus-server.herokuapp.com/Venue/addvenue",
 			data:_data,
 			success: function(data){
-				addVoter(venueID,$.cookie("meetingID"),$.cookie("guestID"));
+				addVoter(venueID);
 			},
 			fail:function(){
 			  	console.log('nope');
@@ -670,12 +675,15 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 		});
 	}
 
-	var addVoter = function(venueID,meetingID,guestID)
+	var addVoter = function(venueID)
 	{
+		var _meetingID = $.cookie("meetingID");
+		var _guestID = $.cookie("guestID");
+
 		var _data = {
 			venueID: venueID,
-			meetingID: meetingID,
-			guestID:guestID
+			meetingID: _meetingID,
+			guestID:_guestID
 		}
 
 		$.ajax({
