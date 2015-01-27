@@ -90,10 +90,10 @@ body {overflow:hidden;}
 }
 
 .send_invitation_button{
-	position:absolute;
-	top:20vw;
-	left:30vw;
-	right:30vw; 
+	position:relative;
+	width:100px;
+	top:20vh;
+	margin:0 auto;
 	background-color:grey;
 	border-style:solid;
 	border-width:3px;
@@ -108,10 +108,10 @@ body {overflow:hidden;}
 }
 
 .leave_group_button{
-	position:absolute;
+	position:relative;
+	width:100px;
 	top:30vh;
-	left:30vw;
-	right:30vw; 
+	margin:0 auto;
 	background-color:grey;
 	border-style:solid;
 	border-width:3px;
@@ -711,8 +711,17 @@ $(document).ready(function(){
 			  	var marker = new google.maps.Marker({
 			      	position: myLatlng,
 			      	map: map,
-			    	title: venue.name
+			    	title: venue.name,
+				      icon: new google.maps.MarkerImage(
+				        "http://chart.googleapis.com/chart?chst=d_bubble_text_small&chld=bb|"+venue.name+"|FF8080|000000",
+				        null, null, new google.maps.Point(0, 42)),
+				      shadow: new google.maps.MarkerImage(
+				        "http://chart.googleapis.com/chart?chst=d_bubble_text_small_shadow&chld=bb|"+venue.name,
+				        null, null, new google.maps.Point(0, 45))
 			  	});
+
+
+
 
 			 	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
 
@@ -767,6 +776,7 @@ $(document).ready(function(){
 
 	var vote = function(id)
 	{
+		$("body").focus();//take focus off input
 		venue = venues[id];
 		addVenue(venue.id,venue.name,venue.coordinates.latitude,venue.coordinates.longitude);
 		//bust default anchor action
@@ -815,9 +825,12 @@ $(document).ready(function(){
 			data:_data,
 			success: function(data){
 				console.log('all good');
+				clearSearchResults();
+				updateMapMarkers();
 			},
 			fail:function(){
 			  	console.log('nope');
+			  	clearSearchResults();
 
 			}
 		});
