@@ -1,12 +1,4 @@
-<html ng-app="myApp">
-<head>
-<meta name="viewport" content="width=300px">.
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-
-<style>
-
-html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+<html ng-app="myApp"> <head> <meta name="viewport" content="width=300px">. <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script> <style>html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 
 body {overflow:hidden;}
 
@@ -51,7 +43,7 @@ body {overflow:hidden;}
 }
 
 .logo{
-	background-image: url(images/somewherebetween.png);
+	background-image: url(images/somewherebetween.67a70fc7.png);
 	background-repeat: no-repeat;
 	background-size: 100%;
 	background-position: 50%;
@@ -163,51 +155,19 @@ body {overflow:hidden;}
 }
 
 .chat_icon{
-	background-image: url(images/chat_icon.png);
+	background-image: url(images/chat_icon.61b2ecd2.png);
 	left:32vw;
 }
 
 .invite_icon{
-	background-image: url(images/add_user_icon.png);
+	background-image: url(images/add_user_icon.a0651b3c.png);
 	left:57vw;
 }
 
 .search_icon{
-	background-image: url(images/search_icon.png);
+	background-image: url(images/search_icon.de3631f7.png);
 	left:84vw;
-}
-
-</style>
-
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-</head>
-<body>
-
-<div class="nickname hide">
-	let's get started by creating a nickname<br><br>
-	<input type="text" placeholder="nickname" class="nicknameval"/><br><br>
-	<i>(hint: use a nickname your friends would <br>
-		recognize, such as FLastname or FirstnameL)</i><br><br>
-	<div class="setnickname">let's go somewhere!</div>
-</div>
-
-
-<div class="header">
-	<div class="logo"></div>
-	<div class="chat_icon"></div>
-	<div class="invite_icon"></div>
-	<div class="search_icon"></div>
-</div>
-
-<div class="main">
-<div id="map-canvas"></div>
-</div>
-
-<style>
-
-
-.venue{
+}</style> <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">  <body> <div class="nickname hide"> let's get started by creating a nickname<br><br> <input type="text" placeholder="nickname" class="nicknameval"><br><br> <i>(hint: use a nickname your friends would <br> recognize, such as FLastname or FirstnameL)</i><br><br> <div class="setnickname">let's go somewhere!</div> </div> <div class="header"> <div class="logo"></div> <div class="chat_icon"></div> <div class="invite_icon"></div> <div class="search_icon"></div> </div> <div class="main"> <div id="map-canvas"></div> </div> <style>.venue{
 	width:100%;
 }
 
@@ -250,19 +210,7 @@ body {overflow:hidden;}
 	top:12vh;
 	left:30vw;
 	right:30vw; 
-}
-
-</style>
-
-<div class="search_form">
-	<div class="search_headline" style="text-align:center">what are you looking for?</div>
-	<div class="venue_type_div"><input id = "search_type" class="venue" type="text" placeholder="(i.e. coffee)"/></div>
-	<div class="search_button">search!</div>
-	</div>
-</div>
-
-<style>
-.chat_form{
+}</style> <div class="search_form"> <div class="search_headline" style="text-align:center">what are you looking for?</div> <div class="venue_type_div"><input id="search_type" class="venue" type="text" placeholder="(i.e. coffee)"></div> <div class="search_button">search!</div> </div>  <style>.chat_form{
 	text-align:center;
 	width:100vw;
 	overflow:hidden;
@@ -283,19 +231,7 @@ body {overflow:hidden;}
 	left: 25vw;
 	right: 156vw;
 	width: 50vw;
-}
-</style>
-
-<div class="chat_form">
-	<div class="dialogue" style="text-align:left">
-		<div id="dialogue_div" name="dialogue_div" style="height:80vh;width:96vw;overflow:auto">
-		</div>
-	</div>
-	<div class="message_input"><input class="comment_text" type="text" /><input class="post_comment" type="button" value="post"></div>
-</div>
-
-<style>
-.invite_form{
+}</style> <div class="chat_form"> <div class="dialogue" style="text-align:left"> <div id="dialogue_div" name="dialogue_div" style="height:80vh;width:96vw;overflow:auto"> </div> </div> <div class="message_input"><input class="comment_text" type="text"><input class="post_comment" type="button" value="post"></div> </div> <style>.invite_form{
 	text-align:center;
 	width:100vw;
 	overflow:hidden;
@@ -303,30 +239,7 @@ body {overflow:hidden;}
 	height:0vh;
 	position:absolute;
 	background-color:rgba(225,225,225,0.9);
-}
-
-</style>
-
-<div class="invite_form" ng-controller="MyController">
-	<div style="text-align:center">invite others!</div>
-	<div class="friend_address_div">
-		<input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"/>
-	</div>
-	<div class="send_invitation_button">send invitation </div>
-	<div class="leave_group leave_group_button">leave group</div>
-	</div>
-</div>
-
-</body>
-<footer>
-
-
-<script type="text/javascript"
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M">
-</script>
-<script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
-<script type="text/javascript">
-	var map = null;
+}</style> <div class="invite_form" ng-controller="MyController"> <div style="text-align:center">invite others!</div> <div class="friend_address_div"> <input class="friend_address" type="text" placeholder="(sms number or e-mail address)" value="{{ person.name }}"> </div> <div class="send_invitation_button">send invitation </div> <div class="leave_group leave_group_button">leave group</div> </div>   <footer> <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK-5ej0LAqfkqLPoHf4nh9bG1lUXfKx6M"></script> <script src="bower_components/jquery.cookie/jquery.cookie.js"></script> <script type="text/javascript">var map = null;
 
 	function centerMap(position) 
 	{	
@@ -352,12 +265,7 @@ body {overflow:hidden;}
 		}
     }
 
-	google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-
-<script>
-
-	$(".search_icon").on("click",function(){
+	google.maps.event.addDomListener(window, 'load', initialize);</script> <script>$(".search_icon").on("click",function(){
 		$(".chat_form").removeClass("display_form");
 		$(".invite_form").removeClass("display_form");
 		$(".search_form").toggleClass("display_form");
@@ -375,13 +283,7 @@ body {overflow:hidden;}
 		$(".invite_form").removeClass("display_form");
 		$(".search_form").removeClass("display_form");
 		$(".chat_form").toggleClass("display_form");
-	});
-	
-</script>
-
-<script>
-<!-- angular stuff -->
-var app = angular.module('myApp', []);
+	});</script> <script>var app = angular.module('myApp', []);
 
 app.run(function($rootScope){
 //	$rootScope.name = "Rob";
@@ -426,17 +328,7 @@ app.controller('MyController',['$scope','$http',function($scope, $http){
 	//$scope.person={
 	//	name:'Robby'
 	//};
-}]);
-
-
-</script>
-
-
-<script type="text/javascript">
-
-
-
-$(document).ready(function(){
+}]);</script> <script type="text/javascript">$(document).ready(function(){
 
 	var GetQueryStringParams = function(sParam){
 	    var sPageURL = window.location.search.substring(1);
@@ -481,22 +373,12 @@ $(document).ready(function(){
 
 	
 
-});
-</script>
-
-<script type="text/javascript">
-
-$(document).ready(function(){
+});</script> <script type="text/javascript">$(document).ready(function(){
 		var nickname = $.cookie("nickname",nickname,{expires:10});
 		if(nickname == null)
 			$(".nickname").removeClass("hide");
 
-});
-</script>
-
-<script type="text/javascript">
-
-	$(".setnickname").on("click",function(){
+});</script> <script type="text/javascript">$(".setnickname").on("click",function(){
 
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(registerGuest,nolocation);
@@ -566,12 +448,7 @@ $(document).ready(function(){
 
 		location.reload();
 
-	});
-</script>
-
-<script type="text/javascript">
-
-	var mapmarkers = [];
+	});</script> <script type="text/javascript">var mapmarkers = [];
 	var venueMarkers = [];
 	var searchinfowindows = [];
 	var guestinfowindows = [];
@@ -876,12 +753,7 @@ $(document).ready(function(){
 
 			}
 		});
-	}
-
-</script>
-
-<script>
-//scripts for chat
+	}</script> <script>//scripts for chat
 
 setInterval(function(){refreshChat();},5000);
 
@@ -940,16 +812,4 @@ function refreshChat()
 		}
 	});
 
-}
-
-</script>
-
-<script>
-//search
-
-
-
-</script>
-
-</footer>
-</html>
+}</script> <script>//search</script> </footer> 
