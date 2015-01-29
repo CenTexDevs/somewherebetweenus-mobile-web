@@ -350,7 +350,6 @@ body {overflow:hidden;}
 		} else {
 			alert("Geolocation is not supported by this browser.");
 		}
-
     }
 
 	google.maps.event.addDomListener(window, 'load', initialize);
@@ -770,9 +769,52 @@ $(document).ready(function(){
         });
     }
 
+    var updateGuestLocation = function()
+    {
+    	if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(updateGuestLocationCallback,nolocation);
+		} else {
+			alert("Geolocation is not supported by this browser.");
+		}
+    }
+
+    var updateGuestLocationCallback = function(position)
+    {
+
+    	var _latitude = position.coords.latitude;
+    	var _longitude = position.coords.longitude;
+
+    	var _guestID = $.cookie('guestID');
+    	var _meetingID = $.cookie('meetingID');
+    
+       	var _data = {
+       		guestID:_guestID,
+       		meetingID:_meetingID,
+       		latitude:_latitude,
+       		longitude:_longitude
+    	};
+
+		$.ajax({
+			type: "POST",
+			url: "http://somewherebetweenus-server.herokuapp.com/Meeting/updateguestlocation",
+			data:_data,
+			success: function(data){
+				updateMapMarkers();
+			},
+			fail:function(){
+			  	console.log('nope');
+
+			}
+		});
+
+    }
+
 	//start update loop
+	setTimeout(function(){updateGuestLocation();},3000);
 	setTimeout(function(){updateMapMarkers();},3000);
+	setTimeout(function(){updateMapMarkers();},10000);
 	setInterval(function(){updateMapMarkers();},60000);
+	setInterval(function(){updateGuestLocation();},300000);
 
 	var vote = function(id)
 	{
