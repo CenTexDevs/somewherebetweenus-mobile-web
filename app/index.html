@@ -272,26 +272,41 @@ body {overflow:hidden;}
 	background-color:rgba(225,225,225,0.9);
 }
 
-.dialogue{
-	margin:2vw;
-	text-align:left;
-}
 
 .message_input{
 	position:absolute;
-	bottom:5px;
+	top:1px;
 	left: 25vw;
 	right: 156vw;
 	width: 50vw;
 }
+
+.message_note{
+	position:absolute;
+	top:30px;
+	left: 25vw;
+	right: 156vw;
+	width: 50vw;
+}
+
+.dialogue{
+	position:absolute;
+	top:60px;
+	bottom:0px;
+	margin:2vw;
+	text-align:left;
+}
+
+
 </style>
 
 <div class="chat_form">
+	<div class="message_input"><input class="comment_text" type="text" /><input class="post_comment" type="button" value="post"></div>
+	<div class="message_note"><i>(comments shown in <b>reverse</b> order)</i></div>
 	<div class="dialogue" style="text-align:left">
 		<div id="dialogue_div" name="dialogue_div" style="height:80vh;width:96vw;overflow:auto">
 		</div>
 	</div>
-	<div class="message_input"><input class="comment_text" type="text" /><input class="post_comment" type="button" value="post"></div>
 </div>
 
 <style>
@@ -548,7 +563,8 @@ $(document).ready(function(){
 			"meetingID":meetingID,
 			"smsNumber":sms_number},
 		  success: function(data){
-		  	$(".nickname").addClass("hide");
+		  	$(".invite_form").removeClass("display_form");
+		  	$("body").focus();
 		  	console.log('all good');
 		  },
 		  fail:function(){
@@ -813,7 +829,7 @@ $(document).ready(function(){
 	setTimeout(function(){updateGuestLocation();},3000);
 	setTimeout(function(){updateMapMarkers();},3000);
 	setTimeout(function(){updateMapMarkers();},10000);
-	setInterval(function(){updateMapMarkers();},60000);
+	setInterval(function(){updateMapMarkers();},10000);
 	setInterval(function(){updateGuestLocation();},300000);
 
 	var vote = function(id)
@@ -928,11 +944,11 @@ function refreshChat()
 			var comments = JSON.parse(data);
 			var output = "";
 			for(var i=0; i<comments.length; i++)
-				output = output + comments[i].comment+"<br>";
+				output = comments[i].nickname + ": " + comments[i].comment+ "<br>"+ output;
 
 		  	$("#dialogue_div").html(output);
 		  	$("#dialogue_div").scrollTop($("#dialogue_div")[0].scrollHeight);
-		  	console.log('all good');
+		  	console.log('all good');2
 		},
 		fail:function(){
 		  	console.log('nope');
